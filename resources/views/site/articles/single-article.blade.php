@@ -50,12 +50,7 @@
                                 <span class="invalid-feedback d-block">{{$message}}</span>
                                 @enderror
                             </div>
-                            <div class="input-box col-lg-12 text-right overflow-hidden mb-3">
-                                <div class="g-recaptcha d-inline-block"
-                                    data-sitekey="{{ config('services.recaptcha.site_key') }}"
-                                    data-callback="reCaptchaCallback" wire:ignore></div>
-                                @error('recaptcha')<span class="invalid-feedback d-block">{{ $message }}</span>@enderror
-                            </div>
+                            
                             <div class="btn-box col-lg-12">
                                 <!-- end custom-control -->
                                 <button class="btn theme-btn" type="submit">ارسال دیدگاه</button>
@@ -203,12 +198,12 @@
 
 </div>
 @push('scripts')
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{{-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> --}}
 
 <script>
-    function reCaptchaCallback(response) {
-        @this.set('recaptcha', response);
-        }
+    // function reCaptchaCallback(response) {
+    //     @this.set('recaptcha', response);
+    //     }
 
         function back_to_episode(id)
         {
@@ -217,8 +212,8 @@
             }, 1000);
         }
 
-        Livewire.on('resetReCaptcha', () => {
-            grecaptcha.reset();
-        });
+        // Livewire.on('resetReCaptcha', () => {
+        //     grecaptcha.reset();
+        // });
 </script>
 @endpush

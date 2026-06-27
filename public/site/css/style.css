@@ -10565,3 +10565,51 @@
         flex-direction: column !important;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+/* .menu-category > ul > li > a {
+    color: #1eb35b !important;
+    font-weight: 600;
+}
+
+.menu-category > ul > li > a:hover {
+    color: #14a350 !important;
+} */
+
+img{
+    max-width :100%;
+    height:auto;
+    display: block;
+}
+
+
+
+
+
+
+
+
+
+/* article card image fix */
+.card-image img,
+.card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.media-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

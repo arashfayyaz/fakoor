@@ -121,6 +121,9 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/samples/{action}/{id?}', App\Http\Controllers\Admin\Samples\StoreSample::class)->name('admin.store.sample');
 
     Route::get('/settings/sitemap', App\Http\Controllers\Admin\Settings\Sitemap::class)->name('admin.setting.sitemap');
+
+
+    
 });
 
 Route::middleware('guest')->get('auth', App\Http\Controllers\Site\Auth\Auth::class)->name('auth');
@@ -131,3 +134,16 @@ Route::get('/logout', function () {
     request()->session()->regenerateToken();
     return redirect()->route('auth');
 })->name('logout');
+
+
+
+// 301 Redirects
+Route::permanentRedirect(
+    '/courses/آزمون+کاربر+ICDL',
+    '/courses/online-icdl-course'
+);
+
+Route::permanentRedirect(
+    '/courses/کاربر-ICDL-ویژه-کانون-وکلای-خراسان-شمالی',
+    '/courses/icdl-course-in-bojnourd'
+);

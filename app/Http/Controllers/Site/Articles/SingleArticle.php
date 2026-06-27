@@ -8,7 +8,7 @@ use App\Http\Controllers\BaseComponent;
 use App\Repositories\Interfaces\ArticleRepositoryInterface;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Repositories\Interfaces\SettingRepositoryInterface;
-use App\Rules\ReCaptchaRule;
+// use App\Rules\ReCaptchaRule;
 use Artesaos\SEOTools\Facades\JsonLd;
 use Artesaos\SEOTools\Facades\OpenGraph;
 use Artesaos\SEOTools\Facades\SEOMeta;
@@ -93,10 +93,10 @@ class SingleArticle extends BaseComponent
     {
         $this->validate([
             'comment' => ['required','string','max:255'],
-            'recaptcha' => ['required', new ReCaptchaRule],
+            // 'recaptcha' => ['required', new ReCaptchaRule],
         ],[],[
             'comment' => 'متن',
-            'recaptcha' => 'کلید امنیتی'
+            // 'recaptcha' => 'کلید امنیتی'
         ]);
         if (!auth()->check())
             return $this->addError('comment','لطفا ابتدا ثبت نام کنید');
@@ -114,7 +114,7 @@ class SingleArticle extends BaseComponent
 
         $comment = $this->articleRepository->newComment($this->article,$data);
         $this->emit('resetReCaptcha');
-        $this->reset(['comment','actionLabel','actionComment','recaptcha']);
+        $this->reset(['comment','actionLabel','actionComment']);
         return $this->emitNotify('دیدگاه با موفقیت ثبت شد');
     }
 

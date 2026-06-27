@@ -62,6 +62,13 @@
                                 </ul>
                             </div>
 
+                             <div class="cta-buttons">
+                            
+                           <a href="tel:09123456789" class="cta-link btn-primary">
+    <i class="la la-phone mr-1"></i>
+    تماس با ما
+</a>
+                        </div>
                             <div class="nav-left-button mr-3">
                                 <ul class="generic-list-item">
                                     @auth()
@@ -76,9 +83,10 @@
                             
 
 
-                            <a href="#" class="cta-link btn-primary">
-                                مشاوره رایگان
-                            </a>
+                             <a href="tel:09123456789" class="cta-link btn-primary">
+        <i class="la la-phone mr-1"></i>
+        تماس با ما
+    </a>
                             
 
                             <a href="{{ route('auth') }}" class="cta-link cta-link--ghost">
@@ -106,7 +114,7 @@
             <i class="la la-times"></i>
         </div>
         <!-- end off-canvas-menu-close -->
-        <p class="off-canvas-menu-heading pt-20px">دسته بندی ها</p>
+        <p class="cta-link cta-link--ghost off-canvas-menu-heading pt-20px">دسته بندی ها</p>
         <ul class="generic-list-item off-canvas-menu-list pt-5">
             <x-site.header-categories :categories="$categories" />
         </ul>

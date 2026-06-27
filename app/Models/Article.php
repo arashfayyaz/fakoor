@@ -32,7 +32,7 @@ class Article extends Model implements Sitemapable
 {
     protected $guarded = ['id'];
 
-    use HasFactory , Searchable ;
+    use HasFactory, Searchable;
 
     public function toSitemapTag(): Url | string | array
     {
@@ -42,16 +42,16 @@ class Article extends Model implements Sitemapable
             ->setPriority(0.1);
     }
 
-    protected array $searchAbleColumns = ['slug','title','body'];
+    protected array $searchAbleColumns = ['slug', 'title', 'body'];
 
-//    public function sluggable(): array
-//    {
-//        return [
-//            'slug' => [
-//                'source' => 'title'
-//            ]
-//        ];
-//    }
+    //    public function sluggable(): array
+    //    {
+    //        return [
+    //            'slug' => [
+    //                'source' => 'title'
+    //            ]
+    //        ];
+    //    }
 
     public function scopeHasCategory($query)
     {
@@ -60,12 +60,15 @@ class Article extends Model implements Sitemapable
 
     public function setImageAttribute($value)
     {
-        $this->attributes['image'] = str_replace(env('APP_URL'), '', $value);
+        // $this->attributes['image'] = str_replace(env('APP_URL'), '', $value);
+        $value = str_replace(env('APP_URL') . '/storage/', '', $value);
+        $value = str_replace(env('APP_URL'), '', $value);
+        $this->attributes['image'] = ltrim($value, '/');
     }
 
-        public function setFileAttribute($value)
+    public function setFileAttribute($value)
     {
-        $this->attributes['file'] = str_replace(env('APP_URL').'/storage', '', $value);
+        $this->attributes['file'] = str_replace(env('APP_URL') . '/storage', '', $value);
     }
 
     public function getStatusLabelAttribute(): string
@@ -83,9 +86,9 @@ class Article extends Model implements Sitemapable
         return $this->belongsTo(User::class);
     }
 
-    public function scopePublished($query , $active = true)
+    public function scopePublished($query, $active = true)
     {
-        return $active ? $query->where('status',ArticleEnum::PUBLISHED) : $query;
+        return $active ? $query->where('status', ArticleEnum::PUBLISHED) : $query;
     }
 
     public function getUpdatedDateAttribute(): string
@@ -105,9 +108,9 @@ class Article extends Model implements Sitemapable
 
     public function comments(): MorphMany
     {
-        return $this->morphMany(Comment::class, 'commentable')->latest('id')->where('status',CommentEnum::CONFIRMED)
-            ->with(['childrenRecursive' => function($q) {
-                return $q->where('status',CommentEnum::CONFIRMED);
+        return $this->morphMany(Comment::class, 'commentable')->latest('id')->where('status', CommentEnum::CONFIRMED)
+            ->with(['childrenRecursive' => function ($q) {
+                return $q->where('status', CommentEnum::CONFIRMED);
             }])->whereNull('parent_id');
     }
 
