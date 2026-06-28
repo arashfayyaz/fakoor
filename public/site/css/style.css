@@ -10316,13 +10316,13 @@
      } */
 
 
-.card-title{
+/* .card-title{
     display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2; 
   overflow: hidden;
   text-overflow: ellipsis;
-}
+} */
 
 .star-inline{
     display: flex;
@@ -10612,4 +10612,36 @@ img{
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+
+
+
+
+
+.card-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* min-height: 3em; */
+}
+
+
+
+
+
+
+
+
+
+.card-item {
+    overflow: visible !important;
+}
+
+/* یا اگه فقط card-body مشکل داره */
+.card-body {
+    overflow: visible;
+    position: relative;
 }

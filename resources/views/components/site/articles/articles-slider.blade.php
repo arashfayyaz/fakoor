@@ -8,8 +8,10 @@
         </div><!-- end section-heading -->
         <div class="blog-post-carousel owl-action-styled half-shape mt-30px">
             @foreach($data['content'] as $item)
-                <x-site.articles.article-box :item="$item"/>
-            @endforeach
+    @if($item->status == \App\Enums\ArticleEnum::PUBLISHED)
+        <x-site.articles.article-box :item="$item"/>
+    @endif
+@endforeach
         </div>
     </div>
 </section>

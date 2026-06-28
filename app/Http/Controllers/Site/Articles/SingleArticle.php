@@ -76,7 +76,16 @@ class SingleArticle extends BaseComponent
         ];
         $ids = array_value_recursive('id',$this->categoryRepository->find($this->article->category_id)->toArray());
         $this->related_posts = $this->articleRepository->whereIn('category_id',$ids,3,true,[['id' , '!=' , $this->article->id]]);
-        $this->comments = $this->article->comments;
+        // $this->comments = $this->article->comments;
+        $this->comments = \App\Models\Comment::where('commentable_type', 'App\Models\Article')
+    ->where('commentable_id', $this->article->id)
+    ->where('status', CommentEnum::CONFIRMED)
+    ->with(['user', 'childrenRecursive' => function($q) {
+        return $q->where('status', CommentEnum::CONFIRMED);
+    }])
+    ->whereNull('parent_id')
+    ->latest()
+    ->get();
         $this->type = $type;
     }
     public function render()
@@ -90,33 +99,42 @@ class SingleArticle extends BaseComponent
     }
 
     public function new_comment()
-    {
-        $this->validate([
-            'comment' => ['required','string','max:255'],
-            // 'recaptcha' => ['required', new ReCaptchaRule],
-        ],[],[
-            'comment' => 'متن',
-            // 'recaptcha' => 'کلید امنیتی'
-        ]);
-        if (!auth()->check())
-            return $this->addError('comment','لطفا ابتدا ثبت نام کنید');
+{
+    $this->validate([
+        'comment' => ['required', 'string', 'max:1000'],
+    ], [], [
+        'comment' => 'متن',
+    ]);
 
-        $status = CommentEnum::NOT_CONFIRMED;
-        if ($this->article->user_id == auth()->id()) {
-            $status = CommentEnum::CONFIRMED;
-        }
-        $data = [
-            'user_id' => auth()->id(),
-            'content' => $this->comment,
-            'parent_id'=> $this->actionComment ?? null,
-            'status' => $status
-        ];
+    if (!auth()->check())
+        return $this->addError('comment', 'لطفا ابتدا ثبت نام کنید');
 
-        $comment = $this->articleRepository->newComment($this->article,$data);
-        $this->emit('resetReCaptcha');
-        $this->reset(['comment','actionLabel','actionComment']);
-        return $this->emitNotify('دیدگاه با موفقیت ثبت شد');
-    }
+    $status = CommentEnum::CONFIRMED;
+
+    \App\Models\Comment::create([
+        'user_id' => auth()->id(),
+        'commentable_type' => 'App\Models\Article',
+        'commentable_id' => $this->article->id,
+        'content' => $this->comment,
+        'parent_id' => $this->actionComment ?? null,
+        'status' => $status,
+        'type' => \App\Models\Comment::TYPE_GENERAL,
+    ]);
+
+    // reload comments
+    $this->comments = \App\Models\Comment::where('commentable_type', 'App\Models\Article')
+        ->where('commentable_id', $this->article->id)
+        ->where('status', CommentEnum::CONFIRMED)
+        ->with(['user', 'childrenRecursive' => function($q) {
+            return $q->where('status', \App\Enums\CommentEnum::CONFIRMED);
+        }])
+        ->whereNull('parent_id')
+        ->latest()
+        ->get();
+
+    $this->reset(['comment', 'actionLabel', 'actionComment']);
+    return $this->emitNotify('دیدگاه با موفقیت ثبت شد');
+}
 
     public function moreComment()
     {

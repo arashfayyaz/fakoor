@@ -1,11 +1,18 @@
 <div>
     <livewire:site.includes.site.slider />
+
+    <!-- @if (sizeof($box) > 0)
+    <div class="container">
+        <div class="row mt-50px">
+            @foreach($box as $item)
+                <x-site.shape-box :item="$item" />
+            @endforeach
+        </div>
+    </div>
+    @endif -->
     
     <div class="row">
         @foreach($content as $item)
-        @if($item['category'] == 'quizzes' || $item['title'] == 'آزمون')
-            @continue
-        @endif
         <div class="col-lg-{{$item['width']}} col-12 px-4">
             @switch($item['category'])
             @case('categories')
@@ -15,7 +22,7 @@
             <x-site.categories.category-grid :data="$item" />
             @endif
             @break
-            @case('organizations')
+            <!-- @case('organizations')
             @if($item['type'] == 'slider')
             <x-site.organizations.organization-slider :data="$item" />
             @else
@@ -38,9 +45,10 @@
             @break
             @case('banners')
             <x-site.banners.banner :data="$item" />
-            @break 
+            @break -->
             @endswitch
         </div>
         @endforeach
+    
     </div>
 </div>

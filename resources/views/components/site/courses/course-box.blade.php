@@ -20,7 +20,11 @@
             <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">
                 <a href="{{ route('courses',['category'=>$item->category->slug]) }}">{{ $item->category->title }}</a>
             </h6>
-            <h5 class="card-title"><a href="{{ route('course',$item['slug']) }}">{{ $item['title'] }}</a></h5>
+            <h5 class="card-title">
+    <a href="{{ route('course',$item['slug']) }}" title="{{ $item['title'] }}">
+        {{ $item['title'] }}
+    </a>
+</h5>
             <div class="star-inline">
                 
         @if(!is_null($item->teacher))

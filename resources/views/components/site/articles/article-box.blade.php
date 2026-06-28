@@ -8,7 +8,7 @@
             <div class="course-badge">{{ $item->date }}</div>
         </div>
     </div><!-- end card-image -->
-    <div style="height:13rem" class="card-body">
+    <div style="height:10rem" class="card-body">
         <h5 class="card-title"><a href="{{ route('article',[$item['type'],$item['slug']]) }}">{{ $item['title'] }}</a></h5>
         <ul class="generic-list-item generic-list-item-bullet generic-list-item--bullet d-flex align-items-center flex-wrap fs-14 pt-2">
             <li class="d-flex align-items-center">   توسط  {{ $item->user->name }} </li>
