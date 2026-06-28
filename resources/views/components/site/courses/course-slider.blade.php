@@ -12,6 +12,12 @@
                     <x-site.courses.course-box :item="$item" />
                 @endforeach
 
+                {{-- @foreach($data['content'] as $item)
+                    @if($item->status !== 'draft')
+                        <x-site.courses.course-box :item="$item" />
+                    @endif
+                @endforeach --}}
+
             </div><!-- end tab-content -->
         </div><!-- end container -->
     </div><!-- end course-wrapper -->
