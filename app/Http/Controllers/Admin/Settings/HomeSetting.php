@@ -5,8 +5,12 @@ namespace App\Http\Controllers\Admin\Settings;
 use App\Http\Controllers\BaseComponent;
 use App\Repositories\Interfaces\SettingRepositoryInterface;
 
+
+
 class HomeSetting extends BaseComponent
 {
+    
+    public $home_course_1, $home_course_2, $home_course_3, $courses_list = [];
     public $header , $content = [] , $i = 1 , $titleContent, $boxContent , $title , $type  , $width , $bgImage  , $moreLink , $widthCase;
     public $category , $bannerLink , $bannerImage , $bannerContent , $contentCase = [] ;
     public $titleSlider , $slider , $sliderImage , $sliderLink , $sliders = [] , $modeSlider , $row , $view;
@@ -21,6 +25,11 @@ class HomeSetting extends BaseComponent
 
     public function mount()
     {
+        $this->home_course_1 = $this->settingRepository->getRow('home_course_1');
+        $this->home_course_2 = $this->settingRepository->getRow('home_course_2');
+        $this->home_course_3 = $this->settingRepository->getRow('home_course_3');
+        $this->courses_list = \App\Models\Course::orderBy('title')->pluck('title', 'id')->toArray();
+// end new 
         $this->authorizing('show_settings_home');
         $this->header = 'تنظیمات صفحه اصلی';
         $this->data['type'] = [
@@ -227,6 +236,9 @@ class HomeSetting extends BaseComponent
 
     public function store()
     {
+        $this->settingRepository::updateOrCreate(['name' => 'home_course_1'], ['value' => $this->home_course_1]);
+        $this->settingRepository::updateOrCreate(['name' => 'home_course_2'], ['value' => $this->home_course_2]);
+        $this->settingRepository::updateOrCreate(['name' => 'home_course_3'], ['value' => $this->home_course_3]);
         $this->authorizing('edit_settings_home');
         $this->resetErrorBag();
         $this->settingRepository::updateOrCreate(['name' => 'homeContent'], ['value' => json_encode($this->content)]);

@@ -14,6 +14,23 @@
                 <x-admin.forms.input type="url" id="sliderLink" label="لینک مورد نظر"
                     wire:model.defer.defer="sliderLink" />
             </x-admin.form-section>
+            <x-admin.form-section label="دوره های تخصصی صفحه اصلی">
+                <x-admin.forms.dropdown 
+                    id="home_course_1" 
+                    :data="$courses_list" 
+                    label="دوره اول*" 
+                    wire:model="home_course_1" />
+                <x-admin.forms.dropdown 
+                    id="home_course_2" 
+                    :data="$courses_list" 
+                    label="دوره دوم*" 
+                    wire:model="home_course_2" />
+                <x-admin.forms.dropdown 
+                    id="home_course_3" 
+                    :data="$courses_list" 
+                    label="دوره سوم*" 
+                    wire:model="home_course_3" />
+            </x-admin.form-section>
             <div class="d-flex col-12 p-0">
                 <div class="">
                     <x-admin.button class="btn btn-light-primary font-weight-bolder btn-sm" content=" افزودن محتوا "

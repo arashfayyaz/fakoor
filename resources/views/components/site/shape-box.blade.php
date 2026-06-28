@@ -1,4 +1,4 @@
-@props(['item'])
+{{-- @props(['item'])
 <div class="col-lg-{{ $item['width'] ?? 4 }} responsive-column-half">
     <div class="card card-item hover-s text-center">
         <div class="card-body">
@@ -12,4 +12,4 @@
             @endif
         </div>
     </div>
-</div>
+</div> --}}
