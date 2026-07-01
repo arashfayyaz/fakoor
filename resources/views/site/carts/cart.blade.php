@@ -9,7 +9,7 @@
                         <tr>
                             <th scope="col">تصویر</th>
                             <th scope="col">مشخصات محصول</th>
-                            <th scope="col">قیمت دوره</th>
+                            <th scope="col">قیمت محصول</th>
                             <th scope="col">قیمت کل</th>
                             <th scope="col">عملیات</th>
                         </tr>
@@ -30,6 +30,7 @@
                             </td>
                             <td>
                                 <ul class="generic-list-item font-weight-semi-bold">
+                                    <li><span class="badge badge-info">{{ $item->typeLabel() }}</span></li>
                                     <li class="text-black lh-18">{{ number_format($item->basePrice) }} تومان</li>
                                 </ul>
                             </td>
@@ -39,7 +40,7 @@
                                 </ul>
                             </td>
                             <td>
-                                <button wire:click="deleteItem({{$item->id}})" type="button"
+                                <button wire:click="deleteItem('{{$item->rowId ?? $item->id}}')" type="button"
                                     class="icon-element icon-element-xs shadow-sm border-0" data-toggle="tooltip"
                                     data-placement="top" title="برداشتن">
                                     <i class="la la-times"></i>

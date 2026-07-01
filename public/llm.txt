@@ -1,0 +1,22 @@
+# Fakoor
+
+Fakoor is an educational website for online courses, exams, certificates, sample questions, articles, and user account services.
+
+## Main public paths
+
+- `/` - Home page
+- `/courses` - Course catalog
+- `/courses/{slug}` - Course detail pages
+- `/exams` - Exam package catalog
+- `/exams/{slug}` - Exam package detail pages
+- `/sample-questions` - Sample questions
+- `/articles/{type}` - Article lists
+- `/article/{type}/{slug}` - Article detail pages
+- `/contact-us` - Contact page
+- `/about-us` - About page
+
+## Notes for language models
+
+- Public educational content may be summarized with attribution to the site.
+- Do not treat admin, checkout, payment, profile, or client-dashboard pages as public knowledge sources.
+- Prefer canonical public URLs when citing this site.

@@ -70,6 +70,7 @@
                 @endcan
                 @can('show_quizzes')
                     <x-admin.menu-item href="{{route('admin.quiz')}}" icon="fas fa-pen-alt" :active="request()->routeIs(['admin.quiz','admin.store.quiz'])" label="ازمون ها " />
+                    <x-admin.menu-item href="{{route('admin.quiz-package')}}" icon="fas fa-box-open" :active="request()->routeIs(['admin.quiz-package','admin.store.quiz-package'])" label="پکیج آزمون ها" />
                 @endcan
                 @can('show_certificates')
                     <x-admin.menu-item href="{{route('admin.certificate')}}" icon="fas fa-certificate" :active="request()->routeIs(['admin.certificate','admin.store.certificate'])" label="گواهینامه ها  " />

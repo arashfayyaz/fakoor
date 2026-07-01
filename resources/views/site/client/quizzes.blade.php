@@ -36,7 +36,7 @@
                                 </li>
                             </ul>
                         </th>
-                        <td>{{ $item->course_data['title'] }}</td>
+                        <td>{{ $item->course_data['title'] ?? '-' }}</td>
                         <td>{{ $item->score }}</td>
                         <td>{{ $item->id }}</td>
                         <td><a href="{{ route('user.quiz',$item->id) }}"> {{in_array($item->result,[\App\Enums\QuizEnum::SUSPENDED,\App\Enums\QuizEnum::PENDING]) ? 'ورود به ازمون' : 'مشاهده کارنامه'}} </a></td>

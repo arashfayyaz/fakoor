@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Site\Carts;
 use App\Enums\OrderEnum;
 use App\Enums\PaymentEnum;
 use App\Enums\ReductionEnum;
+use App\Http\Controllers\Cart\CartItem;
 use App\Http\Controllers\BaseComponent;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Repositories\Interfaces\CourseRepositoryInterface;
@@ -210,6 +211,9 @@ class Checkout extends BaseComponent
 
         if ($meta->contains('name', 'category_ids')){
             foreach (Cart::content() as $item){
+                if (($item->type ?? CartItem::TYPE_COURSE) != CartItem::TYPE_COURSE) {
+                    continue;
+                }
                 $product = $this->courseRepository->find($item->id);
                 $category = $this->categoryRepository->find($product->category_id);
                 $parentCategory = $category->parent;
@@ -226,6 +230,9 @@ class Checkout extends BaseComponent
 
         if ($meta->contains('name', 'exclude_category_ids')){
             foreach (Cart::content() as $item){
+                if (($item->type ?? CartItem::TYPE_COURSE) != CartItem::TYPE_COURSE) {
+                    continue;
+                }
                 $product = $this->courseRepository->find($item->id);
                 $category = $this->categoryRepository->find($product->category_id);
                 $parentCategory = $category->parent;
@@ -243,6 +250,9 @@ class Checkout extends BaseComponent
 
         if ($meta->contains('name', 'organization_ids')){
             foreach (Cart::content() as $item){
+                if (($item->type ?? CartItem::TYPE_COURSE) != CartItem::TYPE_COURSE) {
+                    continue;
+                }
                 if (is_null(auth()->user()->details->organization_id)) {
                     $this->addError('voucher', 'امکان استفاده روی ابن محصولات وجود ندارد');
                         $this->calculatePrice();
@@ -264,6 +274,9 @@ class Checkout extends BaseComponent
 
         if ($meta->contains('name', 'exclude_organization_ids')){
             foreach (Cart::content() as $item){
+                if (($item->type ?? CartItem::TYPE_COURSE) != CartItem::TYPE_COURSE) {
+                    continue;
+                }
                 if (is_null(auth()->user()->details->organization_id)) {
                     $this->addError('voucher', 'امکان استفاده روی ابن محصولات وجود ندارد');
                         $this->calculatePrice();
@@ -403,7 +416,7 @@ class Checkout extends BaseComponent
                     ]);
                 }
                 $original_cart_total_price = Cart::total(0, 0 , 0);
-                foreach (Cart::content() as $key => $item) {
+                foreach (Cart::content() as $item) {
                     $singe_total_price = $item->total();
                     $singe_voucher_amount = 0;
                     $singe_wallet_amount = 0;
@@ -422,8 +435,9 @@ class Checkout extends BaseComponent
                         $singe_wallet_amount =  $singe_total_price*$total_wallet_percent;
                     }
                     $this->orderDetailRepository->create([
-                        'course_id' => $key,
-                        'product_data' => json_encode(['id' => $item->id, 'title' => $item->title]),
+                        'course_id' => ($item->type ?? CartItem::TYPE_COURSE) == CartItem::TYPE_COURSE ? $item->id : null,
+                        'quiz_package_id' => ($item->type ?? CartItem::TYPE_COURSE) == CartItem::TYPE_QUIZ_PACKAGE ? $item->id : null,
+                        'product_data' => json_encode(['id' => $item->id, 'title' => $item->title, 'type' => $item->type ?? CartItem::TYPE_COURSE]),
                         'price' => ($item->basePrice),
                         'total_price' => abs($singe_total_price - $singe_voucher_amount - $singe_wallet_amount ),
                         'reduction_amount' => max($singe_voucher_amount + $item->discount(),0),

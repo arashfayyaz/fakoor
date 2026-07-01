@@ -363,11 +363,11 @@
                     </li>
                     <li class="d-flex align-items-center justify-content-between">
                         <span><i class="la la-bolt mr-2 text-color"></i>امتحان</span>
-                        @if(!is_null($course->quiz))
-                            <a href="{{route('sandbox',$course->quiz->id)}}">بله (شرکت در آزمون آزمایشی)</a>
-                        @else
-                            خیر
-                        @endif
+                        {{ !is_null($course->quiz) ? 'دارد' : 'خیر' }}
+                    </li>
+                    <li class="d-flex align-items-center justify-content-between">
+                        <span><i class="la la-magic mr-2 text-color"></i>هوش مصنوعی</span>
+                        بله
                     </li>
                     <li class="d-flex align-items-center justify-content-between">
                         <span><i class="la la-eye mr-2 text-color"></i>تعداد جلسات</span> {{ $course->episodes->count() }}

@@ -8,6 +8,7 @@
                 </a>
                 <div class="media-body">
                     <h5>{{$item->title}}</h5>
+                    <span class="badge badge-info mb-1">{{ $item->typeLabel() }}</span>
                     <p class="text-black font-weight-semi-bold lh-18">{{number_format($item->total())}} تومان </p>
                 </div>
             </li>

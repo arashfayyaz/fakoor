@@ -18,6 +18,8 @@ Route::middleware(['auth'])->get('/storage/{episode}/{type}', App\Http\Controlle
 Route::get('/', App\Http\Controllers\Site\Homes\Home::class)->name('home');
 Route::get('/courses', App\Http\Controllers\Site\Courses\IndexCourse::class)->name('courses');
 Route::get('/courses/{slug}', App\Http\Controllers\Site\Courses\SingleCourse::class)->name('course');
+Route::get('/exams', App\Http\Controllers\Site\QuizPackages\IndexQuizPackage::class)->name('exams');
+Route::get('/exams/{slug}', App\Http\Controllers\Site\QuizPackages\SingleQuizPackage::class)->name('exam');
 
 Route::get('/articles/{type}', App\Http\Controllers\Site\Articles\IndexArticle::class)->name('articles');
 Route::get('/article/{type}/{slug}', App\Http\Controllers\Site\Articles\SingleArticle::class)->name('article');
@@ -30,7 +32,6 @@ Route::get('/auth', App\Http\Controllers\Site\Auth\Auth::class)->name('auth');
 // در routes/web.php
 Route::post('/auth', [App\Http\Controllers\Site\Auth\Auth::class, 'auth'])->name('auth');
 
-Route::get('/sandbox/{id}', \App\Http\Controllers\Site\Client\Sandbox::class)->name('sandbox');
 // Route::get('/teachers',App\Http\Controllers\Site\Teachers\IndexTeacher::class)->name('teachers');
 // Route::get('/teachers/{id}',App\Http\Controllers\Site\Teachers\SingleTeacher::class)->name('teacher');
 Route::get('/codes/{code}', App\Http\Controllers\CodeController::class)->name('codes');
@@ -85,6 +86,8 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/questions/{action}/{id?}', App\Http\Controllers\Admin\Questions\StoreQuestion::class)->name('admin.store.question');
     Route::get('/quizzes', App\Http\Controllers\Admin\Quizzes\IndexQuiz::class)->name('admin.quiz');
     Route::get('/quizzes/{action}/{id?}', App\Http\Controllers\Admin\Quizzes\StoreQuiz::class)->name('admin.store.quiz');
+    Route::get('/quiz-packages', App\Http\Controllers\Admin\QuizPackages\IndexQuizPackage::class)->name('admin.quiz-package');
+    Route::get('/quiz-packages/{action}/{id?}', App\Http\Controllers\Admin\QuizPackages\StoreQuizPackage::class)->name('admin.store.quiz-package');
     Route::get('/reductions', App\Http\Controllers\Admin\Reductions\IndexReduction::class)->name('admin.reduction');
     Route::get('/reductions/{action}/{id?}', App\Http\Controllers\Admin\Reductions\StoreReduction::class)->name('admin.store.reduction');
     Route::get('/roles', App\Http\Controllers\Admin\Roles\IndexRole::class)->name('admin.role');

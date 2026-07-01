@@ -20,6 +20,7 @@
     <!-- inject:css -->
     <link rel="stylesheet" href="{{ asset('site/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('site/css/line-awesome.css') }}" />
+    <link rel="stylesheet" href="{{ asset('site/css/fontawesome.local.css') }}" />
     <link rel="stylesheet" href="{{ asset('site/css/owl.carousel.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('site/css/owl.theme.default.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('site/css/bootstrap-select.min.css') }}" />
@@ -27,14 +28,10 @@
     <link rel="stylesheet" href="{{ asset('site/css/tooltipster.bundle.css') }}" />
     <link rel="stylesheet" href="{{ asset('site/css/animated-headline.css') }}" />
     <link rel="stylesheet" href="{{ asset('site/css/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('site/css/sweetalert2.local.css') }}" />
     <link rel="stylesheet" href="{{ asset('admin/css/jdate/persianDatepicker-default.css') }}" />
     <!-- end inject -->
-    <!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
-     <script>
-     import Swal from 'sweetalert2'
-
-// or via CommonJS
-const Swal = require('sweetalert2') </script>
+    <script src="{{ asset('site/js/sweetalert2.local.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 
 </head>

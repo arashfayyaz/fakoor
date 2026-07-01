@@ -119,7 +119,7 @@ class Verify extends BaseComponent
         foreach ($this->order->details as $detail) {
             $detail->status = OrderEnum::STATUS_COMPLETED;
             $this->orderDetailRepository->save($detail);
-            if (!is_null($detail->course->quiz)) {
+            if (!is_null($detail->course) && !is_null($detail->course->quiz)) {
                 $quiz = $detail->course->quiz;
                 for ($i=0;$i<$quiz->enter_count;$i++) {
                     $this->transcriptRepository->create([
@@ -132,6 +132,23 @@ class Verify extends BaseComponent
                             'title' => $detail->course->title,
                         ])
                     ]);
+                }
+            }
+            if (!is_null($detail->quizPackage)) {
+                foreach ($detail->quizPackage->quizzes as $quiz) {
+                    for ($i = 0; $i < $detail->quizPackage->enter_count; $i++) {
+                        $this->transcriptRepository->create([
+                            'user_id' => auth()->id(),
+                            'quiz_id' => $quiz->id,
+                            'course_id' => null,
+                            'result' => QuizEnum::PENDING,
+                            'course_data' => json_encode([
+                                'id' => $detail->quizPackage->id,
+                                'title' => $detail->quizPackage->title,
+                                'type' => 'quiz_package',
+                            ])
+                        ]);
+                    }
                 }
             }
         }

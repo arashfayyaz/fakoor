@@ -10,21 +10,26 @@ class Cart
 {
     const CART_NAME = 'cart';
 
-    public function add($course )
+    public function add($product, ?string $type = null)
     {
         $content = $this->content();
-        $cartItem = new CartItem($course);
-        $content->put($course->id, $cartItem);
+        $cartItem = new CartItem($product, $type);
+        $content->put($cartItem->rowId, $cartItem);
         session()->put(self::CART_NAME, $content);
     }
 
     public function get($id)
     {
         $content = $this->content();
-        if (!$content->has($id))
+        if ($content->has($id)) {
+            return $content->get($id);
+        }
+
+        $cartItem = $content->first(fn (CartItem $item) => (string)$item->id === (string)$id);
+        if (is_null($cartItem))
             throw new Exception("The cart does not contain rowId {$id}.");
 
-        return $content->get($id);
+        return $cartItem;
     }
 
     public function update($id)
@@ -33,7 +38,7 @@ class Cart
 
         $cartItem = $this->get($id);
 
-        $content->put($cartItem->id, $cartItem);
+        $content->put($cartItem->rowId ?? $id, $cartItem);
 
         session()->put(self::CART_NAME, $content);
     }
@@ -43,7 +48,7 @@ class Cart
         $content = $this->content();
 
         $cartItem = $this->get($id);
-        $content->pull($cartItem->id);
+        $content->pull($cartItem->rowId ?? $id);
 
         session()->put(self::CART_NAME, $content);
     }

@@ -37,6 +37,11 @@ class OrderDetail extends Model
         return $this->belongsTo(Course::class);
     }
 
+    public function quizPackage(): BelongsTo
+    {
+        return $this->belongsTo(QuizPackage::class);
+    }
+
     public function getStatusLabelAttribute(): string
     {
         return OrderEnum::getStatus()[$this->status];
@@ -49,7 +54,25 @@ class OrderDetail extends Model
 
     public function getProductDataAttribute($value)
     {
-        return json_decode($value, true);
+        return json_decode($value, true) ?: [];
+    }
+
+    public function getProductTitleAttribute(): string
+    {
+        return $this->product_data['title'] ?? $this->course?->title ?? $this->quizPackage?->title ?? '';
+    }
+
+    public function getProductUrlAttribute(): ?string
+    {
+        if (!is_null($this->course)) {
+            return route('course', $this->course->slug);
+        }
+
+        if (!is_null($this->quizPackage)) {
+            return route('exam', $this->quizPackage->slug);
+        }
+
+        return null;
     }
 
     public function getDateAttribute(): string

@@ -6,8 +6,8 @@
                 <table class="table table-bordered generic-table">
                     <thead>
                     <tr>
-                        <th>نام دوره</th>
-                        <th>قیمت دوره</th>
+                        <th>نام محصول</th>
+                        <th>قیمت محصول</th>
                         <th>قیمت کل </th>
                         <th>وضعیت</th>
                     </tr>
@@ -17,7 +17,11 @@
                         @foreach($order->details as $item)
                             <tr>
                                 <td>
-                                    <a href="{{ route('course',$item->course->slug) }}">{{ $item->course->title }}</a>
+                                    @if($item->product_url)
+                                        <a href="{{ $item->product_url }}">{{ $item->product_title }}</a>
+                                    @else
+                                        {{ $item->product_title }}
+                                    @endif
                                 </td>
                                 <td>
                                     {{ number_format($item->price) }} تومان

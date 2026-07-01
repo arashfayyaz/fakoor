@@ -18,7 +18,7 @@
         <!-- end card-image -->
         <div class="card-body">
             <h6 class="ribbon ribbon-blue-bg fs-14 mb-3">
-                <a href="{{ route('courses',['category'=>$item->category->slug]) }}">{{ $item->category->title }}</a>
+                <a href="{{ route('courses',['category'=>$item->category?->slug]) }}">{{ $item->category?->title }}</a>
             </h6>
             <h5 class="card-title">
     <a href="{{ route('course',$item['slug']) }}" title="{{ $item['title'] }}">
@@ -40,11 +40,6 @@
                         <span class="la la-star-o"></span>
                         @endif
                     @endfor
-                    @if(!is_null($item->quiz))
-            <small style="padding-bottom: 3px;"><a href="{{route('sandbox',$item->quiz->id)}}">
-                    آزمون آزمایشی
-                </a></small>
-            @endif
                 </div>
 {{--                <span class="rating-total pl-1">({{$item->sold_count}})</span>--}}
             </div>

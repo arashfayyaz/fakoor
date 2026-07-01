@@ -6,6 +6,8 @@
                   x-data="{text: @entangle($attributes->wire('model')) }"
                   x-init="CKEDITOR.replace('{{$id}}', {
                             language: 'fa',
+                            versionCheck: false,
+                            removePlugins: 'notification',
                            filebrowserImageBrowseUrl: '/file-manager/ckeditor'
                         });
                         CKEDITOR.instances.{{$id}}.on('change', function () {

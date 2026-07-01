@@ -83,6 +83,7 @@
                                     </a>
                                     <div class="media-body">
                                         <h5 class="fs-15 pb-2"> <a class="text-black font-weight-semi-bold">{{ $item->title }}</a></h5>
+                                        <span class="badge badge-info mb-1">{{ $item->typeLabel() }}</span>
                                         <p class="text-black font-weight-semi-bold lh-18">{{ number_format($item->price) }} تومان</p>
                                     </div>
                                 </div>

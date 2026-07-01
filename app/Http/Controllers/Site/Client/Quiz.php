@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Crypt;
 class Quiz extends BaseComponent
 {
     public $transcript ;
+    public $nextTranscript;
     public ?string $token = null;
     public mixed $user;
     public bool $userDetails = false;
@@ -43,6 +44,11 @@ class Quiz extends BaseComponent
         JsonLd::setDescription($settingRepository->getRow('seoDescription'));
         JsonLd::addImage(asset($settingRepository->getRow('logo')));
         $this->userDetails = !empty($this->user->details);
+        $this->nextTranscript = $this->user->transcripts()
+            ->where('quiz_id', $this->transcript->quiz_id)
+            ->where('id', '!=', $this->transcript->id)
+            ->whereIn('result', [QuizEnum::PENDING, QuizEnum::SUSPENDED])
+            ->first();
     }
 
     public function enter_quiz()

@@ -133,7 +133,7 @@ class StoreCourse extends BaseComponent
             'short_body' => ['required','string','max:5200'],
             'seo_keywords' => ['required','string','max:5200'],
             'seo_description' => ['required','string','max:5200'],
-            'long_body' => ['required','string','max:35200'],
+            'long_body' => ['required','string'],
             'image' => ['required','string','max:255'],
             'category' => ['required','exists:categories,id'],
             'quiz' => ['nullable','exists:quizzes,id'],
